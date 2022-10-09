@@ -49,7 +49,7 @@ export default function Vesting({
     //setDisplay(true);
   };
 
-  const options = { gasLimit: 10000000 };
+  const options = { gasLimit: 3000000 };
 
   return (
     <div>

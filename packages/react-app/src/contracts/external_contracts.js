@@ -796,6 +796,22 @@ module.exports = {
         address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         abi: ERC20ABI,
       },
+    },
+  },
+  5: {
+    contracts: {
+      DAIx: {
+        address: "0x3B4abEA3882475a435d3fE749d03Fbb9C90D39CE",
+        abi: ERC20ABI,
+      },
+      GOVx: {
+        address: "0x3d3e39FFb1dAD0fCf1274BA63ec9cAF8DF1f5BD7",
+        abi: ERC20ABI,
+      },
+    },
+  },
+  80001: {
+    contracts: {
       DAIx: {
         address: "0x3B4abEA3882475a435d3fE749d03Fbb9C90D39CE",
         abi: ERC20ABI,

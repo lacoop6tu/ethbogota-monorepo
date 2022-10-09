@@ -35,7 +35,7 @@ export default function Payroll({
     console.log("CONTRIBUTORSSSS", payrollFlow);
   };
 
-  const options = { gasLimit: 5000000 };
+  const options = { gasLimit: 3000000 };
 
   return (
     <div>
