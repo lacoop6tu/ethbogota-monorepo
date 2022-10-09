@@ -16,17 +16,45 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
+  //goerli
+  const superTokenFactory = "0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2"  
+  const sf =  "0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9"
+  const cfa = "0xEd6BcbF6907D4feEEe8a8875543249bEa9D308E8"
 
-  await deploy("YourContract", {
+  
+
+  const DAI = await ethers.getContractAt("MySuperToken","0x3B4abEA3882475a435d3fE749d03Fbb9C90D39CE",deployer);
+  const DAO = await ethers.getContractAt("MySuperToken","0x3d3e39FFb1dAD0fCf1274BA63ec9cAF8DF1f5BD7",deployer);
+  // await DAI.mint("0x9A05c73d43484cD33f06101675E811b6DC666b26",ethers.utils.parseEther('1000000'))
+  // await DAO.mint("0x9A05c73d43484cD33f06101675E811b6DC666b26",ethers.utils.parseEther('1000000'))
+  // Already initialized, use in case we need to redeplouyt
+  // await DAI.initialize('SuperDAIx','SDAIx',ethers.utils.parseEther('1000000'))
+  // await DAO.initialize('SuperGOVx','SGOVx',ethers.utils.parseEther('1000000'))
+
+  console.log(DAI.address,DAO.address);
+  // const provider = new ethers.providers.JsonRpcProvider();
+
+  // const signer = provider.getSigner();
+
+  // await signer.sendTransaction({
+  //   to: "0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa",
+  //   value: ethers.utils.parseEther("1"),
+  // });
+
+
+    await deploy("Vesting", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    // args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    args: [ sf,cfa,DAO.address,DAI.address,deployer,"0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa",1791510754],
     log: true,
     waitConfirmations: 5,
-  });
+  });  
 
+  
+  
   // Getting a previously deployed contract
-  const YourContract = await ethers.getContract("YourContract", deployer);
+  const Vesting = await ethers.getContract("Vesting", deployer);
+  console.log(Vesting.address)
   /*  await YourContract.setPurpose("Hello");
   
     // To take ownership of yourContract using the ownable library uncomment next line and add the 

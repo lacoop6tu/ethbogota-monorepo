@@ -29,7 +29,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
+import { Home, Vesting, Hints, Subgraph, Payroll } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -286,25 +286,32 @@ function App(props) {
         logoutOfWeb3Modal={logoutOfWeb3Modal}
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
-      <Menu style={{ textAlign: "center", marginTop: 20 }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
+      <Menu
+        style={{ textAlign: "center", marginTop: 20, fontSize: "30px" }}
+        selectedKeys={[location.pathname]}
+        mode="horizontal"
+      >
+        {/* <Menu.Item key="/" size='large'>
           <Link to="/">App Home</Link>
-        </Menu.Item>
-        <Menu.Item key="/debug">
+        </Menu.Item> */}
+        {/* <Menu.Item key="/debug">
           <Link to="/debug">Debug Contracts</Link>
-        </Menu.Item>
-        <Menu.Item key="/hints">
+        </Menu.Item> */}
+        {/* <Menu.Item key="/hints" size='large'>
           <Link to="/hints">Hints</Link>
+        </Menu.Item> */}
+        <Menu.Item key="/vesting" size="large">
+          <Link to="/vesting">Vesting</Link>
         </Menu.Item>
-        <Menu.Item key="/exampleui">
-          <Link to="/exampleui">ExampleUI</Link>
+        <Menu.Item key="/payroll" size="large">
+          <Link to="/payroll">Payroll</Link>
         </Menu.Item>
-        <Menu.Item key="/mainnetdai">
+        {/* <Menu.Item key="/mainnetdai" size='large'>
           <Link to="/mainnetdai">Mainnet DAI</Link>
         </Menu.Item>
-        <Menu.Item key="/subgraph">
+        <Menu.Item key="/subgraph" size='large'>
           <Link to="/subgraph">Subgraph</Link>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
 
       <Switch>
@@ -320,7 +327,7 @@ function App(props) {
             */}
 
           <Contract
-            name="YourContract"
+            name="Vesting"
             price={price}
             signer={userSigner}
             provider={localProvider}
@@ -337,8 +344,22 @@ function App(props) {
             price={price}
           />
         </Route>
-        <Route path="/exampleui">
-          <ExampleUI
+        <Route path="/vesting">
+          <Vesting
+            address={address}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            localProvider={localProvider}
+            yourLocalBalance={yourLocalBalance}
+            price={price}
+            tx={tx}
+            writeContracts={writeContracts}
+            readContracts={readContracts}
+            purpose={purpose}
+          />
+        </Route>
+        <Route path="/payroll">
+          <Payroll
             address={address}
             userSigner={userSigner}
             mainnetProvider={mainnetProvider}
