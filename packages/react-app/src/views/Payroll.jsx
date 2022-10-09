@@ -2,7 +2,7 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
-
+import * as PushAPI from "@pushprotocol/restapi";
 import { Address, Balance, Events } from "../components";
 
 export default function Payroll({
@@ -15,6 +15,7 @@ export default function Payroll({
   tx,
   readContracts,
   writeContracts,
+  userSigner,
 }) {
   let contributors = [];
   let vestingFlow = [];
@@ -36,6 +37,30 @@ export default function Payroll({
   };
 
   const options = { gasLimit: 3000000 };
+
+  const sendNotification = async () => {
+    // apiResponse?.status === 204, if sent successfully!
+    const apiResponse = await PushAPI.payloads.sendNotification({
+      userSigner,
+      type: 3, // target
+      identityType: 2, // direct payload
+      notification: {
+        title: `[SDK-TEST] notification TITLE:`,
+        body: `[sdk-test] notification BODY`,
+      },
+      payload: {
+        title: `[sdk-test] payload title`,
+        body: `sample msg body`,
+        cta: "",
+        img: "",
+      },
+      recipients: "eip155:5:0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa", // recipient address
+      channel: "eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681", // your channel address
+      env: "staging",
+    });
+    console.log(apiResponse, "APIRESPONSE");
+    console.log(apiResponse?.status, "APIRESPONSE");
+  };
 
   return (
     <div>
@@ -60,7 +85,7 @@ export default function Payroll({
               borderRadius: 7,
               textAlign: "center",
             }}
-            placeholder="Member address"
+            placeholder="Address"
             onChange={e => {
               setNewMember(e.target.value);
             }}
@@ -75,7 +100,7 @@ export default function Payroll({
               borderRadius: 7,
               textAlign: "center",
             }}
-            placeholder="Monthly payroll"
+            placeholder="Monthly Payroll"
             onChange={e => {
               setNewPayroll(e.target.value);
             }}
@@ -117,6 +142,7 @@ export default function Payroll({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
+              //    await sendNotification()
             }}
           >
             Add Payroll

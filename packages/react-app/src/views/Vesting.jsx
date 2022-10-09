@@ -73,7 +73,7 @@ export default function Vesting({
               borderRadius: 7,
               textAlign: "center",
             }}
-            placeholder="Core Member address"
+            placeholder="Core Member Address"
             onChange={e => {
               setNewMember(e.target.value);
             }}
@@ -88,7 +88,7 @@ export default function Vesting({
               borderRadius: 7,
               textAlign: "center",
             }}
-            placeholder="Monthly vesting"
+            placeholder="Monthly Vesting"
             onChange={e => {
               setNewVesting(e.target.value);
             }}
@@ -103,7 +103,7 @@ export default function Vesting({
               borderRadius: 7,
               textAlign: "center",
             }}
-            placeholder="Monthly payroll"
+            placeholder="Monthly Payroll"
             onChange={e => {
               setNewPayroll(e.target.value);
             }}
