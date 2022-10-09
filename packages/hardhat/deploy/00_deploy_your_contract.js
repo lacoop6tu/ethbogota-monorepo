@@ -17,14 +17,12 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
   //goerli
-  const superTokenFactory = "0x94f26B4c8AD12B18c12f38E878618f7664bdcCE2"  
-  const sf =  "0x22ff293e14F1EC3A09B137e9e06084AFd63adDF9"
-  const cfa = "0xEd6BcbF6907D4feEEe8a8875543249bEa9D308E8"
+  const superTokenFactory = "0x200657E2f123761662567A1744f9ACAe50dF47E6"  
+  const sf =  "0xEB796bdb90fFA0f28255275e16936D25d3418603"
+  const cfa = "0x49e565Ed1bdc17F3d220f72DF0857C26FA83F873"
 
-  
-
-  const DAI = await ethers.getContractAt("MySuperToken","0x3B4abEA3882475a435d3fE749d03Fbb9C90D39CE",deployer);
-  const DAO = await ethers.getContractAt("MySuperToken","0x3d3e39FFb1dAD0fCf1274BA63ec9cAF8DF1f5BD7",deployer);
+  const DAI = await ethers.getContractAt("MySuperToken","0xB26E7eb409B11868cA2891750dbAba02618F571e",deployer);
+  const DAO = await ethers.getContractAt("MySuperToken","0xf59f780ed13D3dC45983a37206bA95E5D138609A",deployer);
   // await DAI.mint("0x9A05c73d43484cD33f06101675E811b6DC666b26",ethers.utils.parseEther('1000000'))
   // await DAO.mint("0x9A05c73d43484cD33f06101675E811b6DC666b26",ethers.utils.parseEther('1000000'))
   // Already initialized, use in case we need to redeplouyt
@@ -45,9 +43,10 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     await deploy("Vesting", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [ sf,cfa,DAO.address,DAI.address,deployer,"0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa","0xAc16CcB2f2f9a81F39b9e7797c91C87f12A544eA",1791510754],
+    args: [ sf,cfa,DAO.address,DAI.address,deployer,deployer,"0xAc16CcB2f2f9a81F39b9e7797c91C87f12A544eA",1791510754],
     log: true,
     waitConfirmations: 5,
+    gasLimit: 900000,
   });  
 
   
