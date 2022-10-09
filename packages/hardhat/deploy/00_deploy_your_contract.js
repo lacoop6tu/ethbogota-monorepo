@@ -45,7 +45,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
     await deploy("Vesting", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [ sf,cfa,DAO.address,DAI.address,deployer,"0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa",1791510754],
+    args: [ sf,cfa,DAO.address,DAI.address,deployer,"0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa","0xAc16CcB2f2f9a81F39b9e7797c91C87f12A544eA",1791510754],
     log: true,
     waitConfirmations: 5,
   });  
