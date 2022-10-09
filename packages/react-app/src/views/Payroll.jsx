@@ -4,6 +4,7 @@ import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
 import * as PushAPI from "@pushprotocol/restapi";
 import { Address, Balance, Events } from "../components";
+import * as ethers from "ethers";
 
 export default function Payroll({
   purpose,
@@ -37,29 +38,35 @@ export default function Payroll({
   };
 
   const options = { gasLimit: 3000000 };
-
+  const PKey = process.env.REACT_APP_PRIVATE_KEY; // channel private key
+  //const Pkey = 0x${PK};
+  const signer = new ethers.Wallet(PKey);
   const sendNotification = async () => {
-    // apiResponse?.status === 204, if sent successfully!
-    const apiResponse = await PushAPI.payloads.sendNotification({
-      userSigner,
-      type: 3, // target
-      identityType: 2, // direct payload
-      notification: {
-        title: `[SDK-TEST] notification TITLE:`,
-        body: `[sdk-test] notification BODY`,
-      },
-      payload: {
-        title: `[sdk-test] payload title`,
-        body: `sample msg body`,
-        cta: "",
-        img: "",
-      },
-      recipients: "eip155:5:0x759E32a6a85667276cBa40B5ABdf5B28Dd400FDa", // recipient address
-      channel: "eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681", // your channel address
-      env: "staging",
-    });
-    console.log(apiResponse, "APIRESPONSE");
-    console.log(apiResponse?.status, "APIRESPONSE");
+    try {
+      const apiResponse = await PushAPI.payloads.sendNotification({
+        signer,
+        type: 3, // target
+        identityType: 2, // direct payload
+        notification: {
+          title: `New Update on Payroll`,
+          body: `[sdk-test] notification BODY`,
+        },
+        payload: {
+          title: `New Update on Payroll`,
+          body: `Checkout the latest changes`,
+          cta: "https://app.superfluid.finance",
+          img: "",
+        },
+        recipients: "eip155:80001:0x945b8961025f7b517842cc67D05Cb09cdA7cF925", // recipient address
+        channel: "eip155:80001:0x945b8961025f7b517842cc67D05Cb09cdA7cF925", // your channel address
+        env: "staging",
+      });
+
+      // apiResponse?.status === 204, if sent successfully!
+      console.log("API repsonse: ", apiResponse);
+    } catch (err) {
+      console.error("Error: ", err);
+    }
   };
 
   return (
@@ -142,7 +149,7 @@ export default function Payroll({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
-              //    await sendNotification()
+              await sendNotification();
             }}
           >
             Add Payroll
@@ -170,6 +177,7 @@ export default function Payroll({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
+              await sendNotification();
             }}
           >
             Update Payroll

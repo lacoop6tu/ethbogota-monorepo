@@ -2,7 +2,8 @@ import { Button, Card, DatePicker, Divider, Input, Progress, Slider, Spin, Switc
 import React, { useState } from "react";
 import { utils } from "ethers";
 import { SyncOutlined } from "@ant-design/icons";
-
+import * as PushAPI from "@pushprotocol/restapi";
+import * as ethers from "ethers";
 import { Address, Balance, Events } from "../components";
 
 export default function Vesting({
@@ -20,7 +21,6 @@ export default function Vesting({
   let vestingFlow = [];
   let payrollFlow = [];
 
-  const year = 31536000;
   const month = 24 * 3600 * 30;
 
   const [newMember, setNewMember] = useState("loading...");
@@ -50,6 +50,36 @@ export default function Vesting({
   };
 
   const options = { gasLimit: 3000000 };
+  const PKey = process.env.REACT_APP_PRIVATE_KEY; // channel private key
+  //const Pkey = 0x${PK};
+  const signer = new ethers.Wallet(PKey);
+  const sendNotification = async () => {
+    try {
+      const apiResponse = await PushAPI.payloads.sendNotification({
+        signer,
+        type: 3, // target
+        identityType: 2, // direct payload
+        notification: {
+          title: `New Update on Vesting`,
+          body: `[sdk-test] notification BODY`,
+        },
+        payload: {
+          title: `New Update on Vesting`,
+          body: `Checkout the latest changes`,
+          cta: "https://app.superfluid.finance",
+          img: "",
+        },
+        recipients: "eip155:80001:0x945b8961025f7b517842cc67D05Cb09cdA7cF925", // recipient address
+        channel: "eip155:80001:0x945b8961025f7b517842cc67D05Cb09cdA7cF925", // your channel address
+        env: "staging",
+      });
+
+      // apiResponse?.status === 204, if sent successfully!
+      console.log("API repsonse: ", apiResponse);
+    } catch (err) {
+      console.error("Error: ", err);
+    }
+  };
 
   return (
     <div>
@@ -145,6 +175,7 @@ export default function Vesting({
               );
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
+              await sendNotification();
             }}
           >
             Set Core Contributors
@@ -173,6 +204,7 @@ export default function Vesting({
               });
               console.log("awaiting metamask/web3 confirm result...", result);
               console.log(await result);
+              await sendNotification();
             }}
           >
             Update vesting
