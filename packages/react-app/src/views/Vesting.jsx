@@ -59,7 +59,7 @@ export default function Vesting({
       <div
         style={{ border: "1px solid #cccccc", padding: 16, width: 800, margin: "auto", marginTop: 64, borderRadius: 7 }}
       >
-        <h2>Vesting:</h2>
+        <h2>Vesting</h2>
         <Divider />
         <div style={{ margin: 20 }}>
           <h3>Add Core Member</h3>

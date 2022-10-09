@@ -26,5 +26,5 @@ export default function Header({ link, title, subTitle, ...props }) {
 Header.defaultProps = {
   link: "https://github.com/lacoop6tu/ethbogota-monorepo",
   title: "🏗 EthBogota - Tools for DAO",
-  subTitle: "Streaming vested tokens and payrolls",
+  subTitle: "Easily stream vested tokens and payrolls",
 };
